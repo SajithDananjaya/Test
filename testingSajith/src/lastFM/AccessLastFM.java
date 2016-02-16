@@ -6,16 +6,15 @@ package lastFM;
 import java.net.URL;
 import java.util.regex.*;
 import java.util.ArrayList;
+import java.io.StringWriter;
 import org.w3c.dom.Document;
 import java.net.URLConnection;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-
+import objectStructures.User;
 
 import java.io.IOException;
-import java.io.StringWriter;
-
 import org.xml.sax.SAXException;
 import java.net.MalformedURLException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,19 +28,16 @@ import javax.xml.transform.stream.StreamResult;
 /**
  * @author Sajith Dananjaya
  *
- * <Sajith.dt@hotmail.com>
  */
 public class AccessLastFM {
 
 	private static String accessToken ="";
 	private static final String BASE_URL = "http://ws.audioscrobbler.com/2.0/?method=";
-
-
-
-	public static void testXML(){				
-
+	
+	
+	public static void initUsers(){
+		
 	}
-
 
 
 	/**
@@ -66,6 +62,7 @@ public class AccessLastFM {
 		return matchList;
 	}
 
+	
 	/**
 	 * 
 	 * @param url
@@ -77,8 +74,8 @@ public class AccessLastFM {
 
 		try{
 			URLConnection response = url.openConnection();
-			DocumentBuilderFactory dBuildFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = dBuildFactory.newDocumentBuilder();
+			DocumentBuilderFactory docBuildFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docBuildFactory.newDocumentBuilder();
 
 			responseXML = docBuilder.parse(response.getInputStream());
 		}
@@ -109,9 +106,7 @@ public class AccessLastFM {
 			System.err.println("ERROR@docToString");
 			System.err.println(e.toString());
 		}
-
 		return writer.toString();
-
 	}
-
+	
 }

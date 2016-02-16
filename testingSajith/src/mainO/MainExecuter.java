@@ -10,7 +10,6 @@ import java.util.ArrayList;
 /**
  * @author Sajith Dananjaya
  *
- * <Sajith.dt@hotmail.com>
  */
 public class MainExecuter {
 

@@ -8,13 +8,17 @@ import java.util.HashMap;
 /**
  * @author Sajith Dananjaya
  *
- * <Sajith.dt@hotmail.com>
  */
 
 public abstract class User {
 	
 	private String userName;
 	private HashMap<String,Integer> musicTaste;
+	
+	
+	public void setUserName(String userName){
+		this.userName= userName;
+	}
 	
 	public final void setMusicTaste(String tagName){
 		if(this.musicTaste.containsKey(tagName)){
@@ -24,7 +28,7 @@ public abstract class User {
 			musicTaste.put(tagName,1);
 		}
 	}
-	
+		
 	public final int getTagCount(String tagName){
 		return musicTaste.get(tagName);
 	}

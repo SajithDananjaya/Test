@@ -14,23 +14,23 @@ import java.util.HashMap;
 public abstract class User {
 	
 	private String userName;
-	private HashMap<String,Integer> musciTaste;
-	private int numberOfTags=0;
+	private HashMap<String,Integer> musicTaste;
 	
-	
-	
-	
-	public final void setMusicTaste(String tagName,int tagCount){
-				
+	public final void setMusicTaste(String tagName){
+		if(this.musicTaste.containsKey(tagName)){
+			int tagCount = musicTaste.get(tagName);
+			musicTaste.replace(tagName, tagCount+1);
+		}else{
+			musicTaste.put(tagName,1);
+		}
 	}
 	
-	public final int getTagCount(String tageName){
-		int tagCount=0;
-		return 0;
+	public final int getTagCount(String tagName){
+		return musicTaste.get(tagName);
 	}
 	
-	public HashMap<String, Integer> getMusicTaste(){
-		return this.musciTaste;
+	public final HashMap<String, Integer> getMusicTaste(){
+		return this.musicTaste;
 	}
 	
 	

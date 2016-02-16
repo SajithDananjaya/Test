@@ -35,10 +35,15 @@ public class AccessLastFM {
 	private static final String BASE_URL = "http://ws.audioscrobbler.com/2.0/?method=";
 	
 	
-	public static void initUsers(){
-		
+	
+	
+	public static ArrayList<User> getInitialUsers(){
+		return null;
 	}
 
+	public static User initUser(){
+		return null;
+	}
 
 	/**
 	 * 

@@ -4,6 +4,7 @@
 package lastFM;
 
 import java.net.URL;
+import java.util.List;
 import java.util.regex.*;
 import java.util.ArrayList;
 import java.io.StringWriter;
@@ -13,6 +14,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import objectStructures.User;
+import objectStructures.Tag;
 
 import java.io.IOException;
 import org.xml.sax.SAXException;
@@ -33,11 +35,12 @@ public class AccessLastFM {
 
 	private static String accessToken ="";
 	private static final String BASE_URL = "http://ws.audioscrobbler.com/2.0/?method=";
+	private static List<Tag> knownTags;
 	
 	
 	
 	
-	public static ArrayList<User> getInitialUsers(){
+	public static List<User> getInitialUsers(){
 		return null;
 	}
 
@@ -51,8 +54,8 @@ public class AccessLastFM {
 	 * @param responseXML
 	 * @return String ArrayList with all the matched information
 	 */
-	public static ArrayList<String> extractPattern(String regPattern,Document responseXML,int tagNameLength){
-		ArrayList<String> matchList = new ArrayList<>();
+	public static List<String> extractPattern(String regPattern,Document responseXML,int tagNameLength){
+		List<String> matchList = new ArrayList<>();
 
 		String tempXML = docToString(responseXML);
 

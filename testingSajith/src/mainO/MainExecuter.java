@@ -5,7 +5,7 @@ package mainO;
 
 import java.net.URL;
 import org.w3c.dom.Document;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Sajith Dananjaya
@@ -22,14 +22,11 @@ public class MainExecuter {
 		URL tempUrl = new URL(url);
 
 		Document tempXml = lastFM.AccessLastFM.grabXML(tempUrl);
-		ArrayList<String> usersNames =lastFM.AccessLastFM.extractPattern("<name>(.*?)</name>", tempXml,4);
+		List<String> usersNames =lastFM.AccessLastFM.extractPattern("<name>(.*?)</name>", tempXml,4);
 
 		for(String name:usersNames){
 			System.out.println(name);
-
 		}
-		System.out.println("Hellow ");
-		// TODO Auto-generated method stub
 
 	}
 

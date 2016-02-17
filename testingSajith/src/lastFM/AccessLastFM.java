@@ -30,7 +30,7 @@ import javax.xml.transform.stream.StreamResult;
  */
 public class AccessLastFM {
 
-	private static final String ACCESS_TOKEN ="dd9ef64ad83b4c3b3d074a38f43cd3da";
+	private static final String ACCESS_TOKEN ="";
 	private static final String BASE_URL = "http://ws.audioscrobbler.com/2.0/?method=";
 	
 	public static URL getURL(String methodParam){

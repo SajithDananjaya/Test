@@ -13,9 +13,6 @@ import java.net.URLConnection;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import objectStructures.User;
-import objectStructures.Tag;
-
 import java.io.IOException;
 import org.xml.sax.SAXException;
 import java.net.MalformedURLException;
@@ -33,21 +30,21 @@ import javax.xml.transform.stream.StreamResult;
  */
 public class AccessLastFM {
 
-	private static String accessToken ="";
+	private static final String ACCESS_TOKEN ="dd9ef64ad83b4c3b3d074a38f43cd3da";
 	private static final String BASE_URL = "http://ws.audioscrobbler.com/2.0/?method=";
-	private static List<Tag> knownTags;
 	
-	
-	
-	
-	public static List<User> getInitialUsers(){
-		return null;
+	public static URL getURL(String methodParam){
+		String url =BASE_URL+methodParam+"&api_key="+ACCESS_TOKEN;
+		URL tempURL = null;
+		try{
+			tempURL = new URL(url);
+			
+		}catch (IOException e){
+			System.err.println("ERROR@getURL_IOException");
+			System.err.println(e.toString());
+		}
+		return tempURL;
 	}
-
-	public static User initUser(){
-		return null;
-	}
-
 	/**
 	 * 
 	 * @param regPattern
@@ -98,7 +95,10 @@ public class AccessLastFM {
 			System.err.println(e.toString());
 		}
 		return responseXML;
-	}	
+	}
+	
+	
+	
 
 	private static String docToString(Document doc){
 		StringWriter writer = new StringWriter();

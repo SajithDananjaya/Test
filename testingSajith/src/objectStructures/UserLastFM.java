@@ -13,7 +13,10 @@ public class UserLastFM extends User{
 	
 	List<Song> favoriteSongs;
 	
-	public UserLastFM(){
+	private UserLastFM(){}
+	
+	public UserLastFM(String username){
+		super.setUserName(username);
 		favoriteSongs= new ArrayList<>();
 	}
 	

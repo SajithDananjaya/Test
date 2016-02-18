@@ -13,19 +13,23 @@ import java.util.HashMap;
 public abstract class User {
 	
 	private String userName;
-	private HashMap<String,Integer> musicTaste;
+	private HashMap<Tag,Integer> musicTaste;
 	
 	
 	public void setUserName(String userName){
 		this.userName= userName;
 	}
 	
-	public final void setMusicTaste(String tagName){
-		if(this.musicTaste.containsKey(tagName)){
-			int tagCount = musicTaste.get(tagName);
-			musicTaste.replace(tagName, tagCount+1);
+	public String getUserName(){
+		return this.userName;
+	}
+	
+	public final void setMusicTaste(Tag tag){
+		if(this.musicTaste.containsKey(tag)){
+			int tagCount = musicTaste.get(tag);
+			musicTaste.replace(tag, tagCount+1);
 		}else{
-			musicTaste.put(tagName,1);
+			musicTaste.put(tag,1);
 		}
 	}
 		
@@ -33,7 +37,7 @@ public abstract class User {
 		return musicTaste.get(tagName);
 	}
 	
-	public final HashMap<String, Integer> getMusicTaste(){
+	public final HashMap<Tag, Integer> getMusicTaste(){
 		return this.musicTaste;
 	}
 	

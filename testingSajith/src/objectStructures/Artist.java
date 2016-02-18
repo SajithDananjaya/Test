@@ -25,7 +25,7 @@ public class Artist {
 		return this.artistName; 
 	}
 	
-	public void setArtistTag(Tag tag){
+	public void addArtistTag(Tag tag){
 		this.artistTagList.add(tag);
 	}
 	

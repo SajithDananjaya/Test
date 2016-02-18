@@ -3,6 +3,9 @@
  */
 package objectStructures;
 
+import java.util.List;
+
+
 /**
  * @author Sajith Dananjaya
  *
@@ -11,13 +14,18 @@ public class Song {
 	
 	private String songMD;
 	private String songName;
+	private List<Tag> songTags;
+	private Artist songArtist;
+	
 	
 	private Song(){}
 	
-	private Song(String songMD,String songName){
-		this.songMD=songMD;
+	public Song(String songName){
 		this.songName=songName;
 	}
+	
+	
+	
 	
 	public String getSongName(){
 		return this.songName;

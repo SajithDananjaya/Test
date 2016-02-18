@@ -18,6 +18,7 @@ public abstract class User {
 	
 	public void setUserName(String userName){
 		this.userName= userName;
+		musicTaste= new HashMap<>();
 	}
 	
 	public String getUserName(){

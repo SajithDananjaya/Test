@@ -34,7 +34,7 @@ public class AccessLastFM {
 	private static final String BASE_URL = "http://ws.audioscrobbler.com/2.0/?method=";
 	
 	public static URL getURL(String methodParam){
-		String url =BASE_URL+methodParam+"&api_key="+ACCESS_TOKEN;
+		String url = BASE_URL+methodParam+"&api_key="+ACCESS_TOKEN;
 		URL tempURL = null;
 		try{
 			tempURL = new URL(url);

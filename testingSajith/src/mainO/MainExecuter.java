@@ -5,8 +5,14 @@ package mainO;
 
 import java.net.URL;
 import org.w3c.dom.Document;
+
+import lastFM.AccessLastFM;
+import lastFM.LastFMDataController;
+
 import java.util.List;
 
+import objectStructures.*;
+import java.util.*;
 /**
  * @author Sajith Dananjaya
  *
@@ -16,17 +22,21 @@ public class MainExecuter {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws Exception {
-
-		String url ="http://ws.audioscrobbler.com/2.0/?method=user.getFriends&user=sajithdr&api_key=";
-		URL tempUrl = new URL(url);
-
-		Document tempXml = lastFM.AccessLastFM.grabXML(tempUrl);
-		List<String> usersNames =lastFM.AccessLastFM.extractPattern("<name>(.*?)</name>", tempXml,4);
-
-		for(String name:usersNames){
-			System.out.println(name);
+	public static void main(String[] args){
+		
+		LastFMDataController.initiateUsers();
+		
+		System.out.println(LastFMDataController.getTagCount());
+		
+		List<User> userList = LastFMDataController.getUserList();
+		for(User u:userList){
+			System.err.println(u.getUserName());
+			for(Tag tag: u.getMusicTaste().keySet()){
+				System.out.print(tag.getTagName()+" : "+u.getMusicTaste().get(tag)+", ");
+			}
+			System.err.println("");
 		}
+		System.out.println("##### DONE");
 
 	}
 

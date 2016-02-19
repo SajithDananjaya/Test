@@ -38,13 +38,14 @@ public class AccessLastFM {
 		URL tempURL = null;
 		try{
 			tempURL = new URL(url);
-			
 		}catch (IOException e){
 			System.err.println("ERROR@getURL_IOException");
 			System.err.println(e.toString());
 		}
 		return tempURL;
 	}
+	
+	
 	/**
 	 * 
 	 * @param regPattern

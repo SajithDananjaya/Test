@@ -30,7 +30,7 @@ public class LastFMDataController {
 	
 	
 	public static void initiateUsers(){
-		URL url = AccessLastFM.getURL("user.getFriends&user=sajithdr&limit=2");
+		URL url = AccessLastFM.getURL("user.getFriends&user=sajithdr&limit=6");
 		Document userListXML = AccessLastFM.grabXML(url);
 		List<String> userList = AccessLastFM.extractPattern("<name>(.*?)</name>", userListXML, 4);
 		for(String userName:userList){

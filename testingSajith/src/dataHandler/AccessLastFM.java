@@ -1,7 +1,7 @@
 /**
  * 
  */
-package lastFM;
+package dataHandler;
 
 import java.net.URL;
 import java.util.List;

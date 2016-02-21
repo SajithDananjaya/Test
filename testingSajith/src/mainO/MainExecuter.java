@@ -6,8 +6,8 @@ package mainO;
 import java.net.URL;
 import org.w3c.dom.Document;
 
-import lastFM.AccessLastFM;
-import lastFM.LastFMDataController;
+import dataHandler.AccessLastFM;
+import dataHandler.LastFMDataController;
 
 import java.util.List;
 

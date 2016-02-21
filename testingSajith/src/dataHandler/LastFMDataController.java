@@ -1,4 +1,4 @@
-package lastFM;
+package dataHandler;
 
 /**
  * @author Sajith Dananjaya

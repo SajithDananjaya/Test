@@ -34,7 +34,7 @@ public class LogFactory {
 	
 	private static void initiateHanlder(){
 		try{
-			logFile=new FileHandler("./appLog.log");
+			logFile=new FileHandler("./appLog.txt");
 		}catch(IOException e){
 			System.err.println("Error@initiateHanlder");
 			System.err.println(e.toString());

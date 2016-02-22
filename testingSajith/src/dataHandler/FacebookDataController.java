@@ -8,27 +8,22 @@ package dataHandler;
  *
  */
 
-import objectStructures.User;
-import objectStructures.UserFacebook;
 import java.util.List;
 import java.util.ArrayList;
 
+import objectStructures.User;
+import objectStructures.UserFacebook;
 
 
 public class FacebookDataController {
 	
-	
-	
-	
-	
-	public static void initiateFacebookUser(){
+	public static User setUserTaste(User user){	
+		List<String> artistNameList = AccessFacebook.getArtistList(user);
+		return LastFMDataController.addUserTags(user, artistNameList);
 		
 	}
 	
-	private static List<String> getUserArtistList(String userID,String accessToken){
-		return null;
-		
-	}
+	
 	
 	
 	

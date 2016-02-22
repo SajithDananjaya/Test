@@ -8,6 +8,7 @@ import org.w3c.dom.Document;
 
 import dataHandler.AccessLastFM;
 import dataHandler.LastFMDataController;
+import dataHandler.FacebookDataController;
 
 import java.util.List;
 
@@ -23,21 +24,16 @@ public class MainExecuter {
 	 * @param args
 	 */
 	public static void main(String[] args){
+		String userID="";
+		String name = "Sajith Dananjaya";
+		String accessToken ="";
 		
-		LastFMDataController.initiateUsers();
+		User facebookUser = FacebookDataController
+				.setUserTaste(new UserFacebook(userID, name, accessToken));
 		
-		System.out.println(LastFMDataController.getTagCount());
-		
-		List<User> userList = LastFMDataController.getUserList();
-		for(User u:userList){
-			System.err.println(u.getUserName());
-			for(Tag tag: u.getMusicTaste().keySet()){
-				System.out.print(tag.getTagName()+" : "+u.getMusicTaste().get(tag)+", ");
-			}
-			System.err.println("");
+		for(Tag t: facebookUser.getMusicTaste().keySet()){
+			System.err.println(t.getTagName()+" : "+facebookUser.getMusicTaste().get(t));
 		}
-		System.out.println("##### DONE");
-
 	}
 
 }

@@ -10,17 +10,20 @@ package objectStructures;
 public class UserFacebook extends User{
 	
 	private String name;
+	private String accessToken;
 	
-	public UserFacebook(String username,String name){
-		super.setUserName(username);
+	public UserFacebook(String userID,String name,String accessToken){
+		super.setUserName(userID);
 		this.name=name;
+		this.accessToken=accessToken;
 	}
 	
-	public void setName(String name){
-		this.name=name;
-	}
 	
 	public String getName(){
 		return this.name;
+	}
+	
+	public String getAccessToken(){
+		return this.accessToken;
 	}
 }

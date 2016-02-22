@@ -50,6 +50,7 @@ public class LastFMDataController {
 	
 	public static User addUserTags(User user,List<String> artistNameList){
 		for(String artistName:artistNameList){
+			System.err.println(artistName);
 			List<Tag> artistTags = getArtistInformation(artistName);
 			for(Tag tag:artistTags){
 				user.setMusicTaste(tag);

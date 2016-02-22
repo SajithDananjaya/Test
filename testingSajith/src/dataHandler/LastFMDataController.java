@@ -84,9 +84,6 @@ public class LastFMDataController {
 	}
 	
 	
-	
-	
-	
 	public static int getTagCount(){
 		return (currentTagID-1);
 	}

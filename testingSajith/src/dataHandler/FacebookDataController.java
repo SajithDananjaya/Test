@@ -8,12 +8,5 @@ package dataHandler;
  *
  */
 
-
-
-
-
 public class FacebookDataController {
-	
-	
-
 }

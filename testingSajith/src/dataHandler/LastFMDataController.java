@@ -45,13 +45,17 @@ public class LastFMDataController {
 		URL url = AccessLastFM.getURL("user.getTopArtists&user="+userName+"&limit=20");
 		Document userArtitsList = AccessLastFM.grabXML(url);
 		List<String> artistNameList = AccessLastFM.extractPattern("<name>(.*?)</name>", userArtitsList, 4);
+		return addUserTags(tempUser, artistNameList);
+	}
+	
+	public static User addUserTags(User user,List<String> artistNameList){
 		for(String artistName:artistNameList){
 			List<Tag> artistTags = getArtistInformation(artistName);
 			for(Tag tag:artistTags){
-				tempUser.setMusicTaste(tag);
+				user.setMusicTaste(tag);
 			}
 		}
-		return tempUser;
+		return user;
 	}
 	
 	public static List<Tag> getArtistInformation(String artistName){

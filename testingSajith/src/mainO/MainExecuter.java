@@ -30,6 +30,7 @@ public class MainExecuter {
 		
 		User facebookUser = FacebookDataController
 				.setUserTaste(new UserFacebook(userID, name, accessToken));
+		facebookUser.filterTaste();
 		
 		for(Tag t: facebookUser.getMusicTaste().keySet()){
 			System.err.println(t.getTagName()+" : "+facebookUser.getMusicTaste().get(t));

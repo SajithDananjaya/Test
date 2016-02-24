@@ -42,6 +42,20 @@ public abstract class User {
 		return this.musicTaste;
 	}
 	
+	public void filterTaste(){
+		HashMap<Tag, Integer> tempTasteMap = new HashMap<>();
+		for(Tag t : this.musicTaste.keySet()){
+			int tagCount = this.musicTaste.get(t);
+			if(tagCount>2){
+				tempTasteMap.put(t, tagCount);
+			}
+		}
+		this.musicTaste = tempTasteMap;
+	}
+	
+	
+	
+	
 	
 
 }

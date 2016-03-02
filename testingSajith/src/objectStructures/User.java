@@ -5,6 +5,8 @@ package objectStructures;
 
 
 import java.util.HashMap;
+import java.util.Arrays;
+import dataHandler.LastFMDataController;
 /**
  * @author Sajith Dananjaya
  *
@@ -12,9 +14,10 @@ import java.util.HashMap;
 
 public abstract class User {
 	
+	private int userID;
 	private String userName;
 	private HashMap<Tag,Integer> musicTaste;
-	
+
 	
 	public void setUserName(String userName){
 		this.userName= userName;
@@ -23,6 +26,14 @@ public abstract class User {
 	
 	public String getUserName(){
 		return this.userName;
+	}
+	
+	public void setUserID(int userID){
+		this.userID = userID;
+	}
+	
+	public int getUserID(){
+		return this.userID;
 	}
 	
 	public final void setMusicTaste(Tag tag){
@@ -51,6 +62,24 @@ public abstract class User {
 			}
 		}
 		this.musicTaste = tempTasteMap;
+	}
+	
+	public String getTasteString(){
+		int totalTagCount = LastFMDataController.getTagCount();
+		String[] tasteArray = new String[totalTagCount];
+		Arrays.fill(tasteArray, "0");
+		for(Tag t:musicTaste.keySet()){
+			tasteArray[t.getTagID()-1]= musicTaste.get(t)+"";
+		}
+		return arrayToString(tasteArray);
+	}
+	
+	private String arrayToString(String[] tasteArray){
+		String array= "";
+		for(String s:tasteArray){
+			array=array+","+s;
+		}
+		return array;
 	}
 	
 	

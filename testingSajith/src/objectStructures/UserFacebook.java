@@ -12,8 +12,8 @@ public class UserFacebook extends User{
 	private String name;
 	private String accessToken;
 	
-	public UserFacebook(String userID,String name,String accessToken){
-		super.setUserName(userID);
+	public UserFacebook(String userName,String name,String accessToken){
+		super.setUserName(userName);
 		this.name=name;
 		this.accessToken=accessToken;
 	}

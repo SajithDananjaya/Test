@@ -24,17 +24,28 @@ public class MainExecuter {
 	 * @param args
 	 */
 	public static void main(String[] args){
-		String userID="";
-		String name = "Sajith Dananjaya";
-		String accessToken ="";
+
+		LastFMDataController.loadPreviousData();
 		
-		User facebookUser = FacebookDataController
-				.setUserTaste(new UserFacebook(userID, name, accessToken));
-		facebookUser.filterTaste();
+//		LastFMDataController.initiateUsers();
+//		LastFMDataController.saveTagInforamtion();
+//		LastFMDataController.saveUserInformation();
+//		LastFMDataController.saveArtistInforamtion();
 		
-		for(Tag t: facebookUser.getMusicTaste().keySet()){
-			System.err.println(t.getTagName()+" : "+facebookUser.getMusicTaste().get(t));
-		}
+//		
+//		String userID="";
+//		String name = "Sajith Dananjaya";
+//		String accessToken ="";
+//		
+//		User facebookUser = FacebookDataController
+//				.setUserTaste(new UserFacebook(userID, name, accessToken));
+//		facebookUser.filterTaste();
+//		
+//		for(Tag t: facebookUser.getMusicTaste().keySet()){
+//			System.err.println(t.getTagName()+" : "+facebookUser.getMusicTaste().get(t));
+//		}
+//		
+//		System.out.println(facebookUser.getTasteString());
 	}
 
 }

@@ -36,5 +36,13 @@ public class Artist {
 	public List<Tag> getArtistTags(){
 		return this.artistTagList;
 	}
+	
+	public String getTagListString(){
+		String stringTagList = "";
+		for(Tag t : artistTagList){
+			stringTagList=stringTagList+","+t.getTagName();
+		}
+		return stringTagList;
+	}
 
 }

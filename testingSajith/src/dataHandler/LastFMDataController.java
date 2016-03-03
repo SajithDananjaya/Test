@@ -10,14 +10,18 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 import org.w3c.dom.Document;
+
+import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
 import objectStructures.Tag;
 import objectStructures.User;
 import objectStructures.Song;
 import objectStructures.Artist;
 import objectStructures.UserLastFM;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -31,7 +35,7 @@ public class LastFMDataController {
 	private static HashMap<String, Artist> learnedArtists = new HashMap<>();
 
 	public static void initiateUsers() {
-		URL url = AccessLastFM.getURL("user.getFriends&user=sajithdr&limit=5");
+		URL url = AccessLastFM.getURL("user.getFriends&user=sajithdr&limit=130");
 		Document userListXML = AccessLastFM.grabXML(url);
 		List<String> userList = AccessLastFM.extractPattern("<name>(.*?)</name>", userListXML, 4);
 		for (String userName : userList) {
@@ -46,7 +50,7 @@ public class LastFMDataController {
 
 	public static User setUserTaste(String userName) {
 		User tempUser = new UserLastFM(userName);
-		URL url = AccessLastFM.getURL("user.getTopArtists&user=" + userName + "&limit=20");
+		URL url = AccessLastFM.getURL("user.getTopArtists&user=" + userName + "&limit=100");
 		Document userArtitsList = AccessLastFM.grabXML(url);
 		List<String> artistNameList = AccessLastFM.extractPattern("<name>(.*?)</name>", userArtitsList, 4);
 		return addUserTags(tempUser, artistNameList);
@@ -54,7 +58,7 @@ public class LastFMDataController {
 
 	public static User addUserTags(User user, List<String> artistNameList) {
 		for (String artistName : artistNameList) {
-			System.err.println(artistName);
+			// System.err.println(artistName);
 			List<Tag> artistTags = getArtistInformation(artistName);
 			for (Tag tag : artistTags) {
 				user.setMusicTaste(tag);
@@ -121,46 +125,71 @@ public class LastFMDataController {
 			System.err.println(e.toString());
 		}
 	}
-	
-	
-	public static void saveUserInformation(){
+
+	public static void saveUserInformation() {
 		BufferedWriter tempWriter = getWriter("./learnedUsers.txt");
-		try{
-			for(User user: initialUsers){
-				String data = user.getUserID()+","+user.getUserName()+user.getTasteString();
-				//System.err.println(data);
+		try {
+			for (User user : initialUsers) {
+				String data = user.getUserID() + "," + user.getUserName() + user.getTasteString();
+				// System.err.println(data);
 				tempWriter.write(data);
 				tempWriter.newLine();
 			}
 			tempWriter.close();
-		}catch(IOException e){
+		} catch (IOException e) {
 			System.err.println("ERROR@LastFMDataController_saveUserInformation");
 			System.err.println(e.toString());
 		}
 	}
-	
-	public static void saveArtistInforamtion(){
+
+	public static void saveArtistInforamtion() {
 		BufferedWriter tempWriter = getWriter("./learnedArtists.txt");
-		try{
-			for(String artistName: learnedArtists.keySet()){
-				Artist artist = learnedArtists.get(artistName);
-				String data = artist.getArtistName()+artist.getTagListString();
-				System.err.println(data);
-				tempWriter.write(data);
-				tempWriter.newLine();
+		try {
+			for (String artistName : learnedArtists.keySet()) {
+				try {
+					Artist artist = learnedArtists.get(artistName);
+					String data = artist.getArtistName() + artist.getTagListString();
+					//System.err.println(data);
+					tempWriter.write(data);
+					tempWriter.newLine();
+				} catch (Exception e) {
+					System.err.println("Error on saving " + artistName);
+				}
 			}
 			tempWriter.close();
-		}catch(IOException e){
-			System.err.println("ERROR@LastFMDataController_saveUserInformation");
+		} catch (IOException e) {
+			System.err.println("ERROR@LastFMDataController_saveArtistInformation");
 			System.err.println(e.toString());
 		}
 	}
-	
-	
-	public static void loadPreviousData(){
-		
+
+	public static void createDataSheet() {
+		BufferedWriter tempWriter = getWriter("./trainDataSet.arff");
+		try {
+			tempWriter.write("@relation dataSet");
+			tempWriter.newLine();
+			tempWriter.newLine();
+
+			for (int index = 0; index < currentTagID - 1; index++) {
+				tempWriter.write("@attribute tag" + index + " numeric");
+				tempWriter.newLine();
+			}
+
+			tempWriter.newLine();
+			tempWriter.write("@data");
+			tempWriter.newLine();
+
+			for (User user : initialUsers) {
+				tempWriter.write(user.getUserID() + user.getTasteString());
+				tempWriter.newLine();
+			}
+			tempWriter.close();
+
+		} catch (IOException e) {
+			System.err.println("asdfasdfasdf");
+		}
 	}
-	
+
 	private static BufferedWriter getWriter(String filePath) {
 		File tempFile = new File(filePath);
 		BufferedWriter bufferedWriter = null;
@@ -176,9 +205,84 @@ public class LastFMDataController {
 		}
 		return bufferedWriter;
 	}
-	
-	private static void getReader(String filePath){
+
+	public static void loadPreviousData() {
+		currentTagID = 1;
+		initailTags = loadLearnedTag();
+		currentTagID = initailTags.size() + 1;
+		learnedArtists = loadLearnedArtist();
+
+	}
+
+	private static HashMap<String, Tag> loadLearnedTag() {
+		String filePath = "./learnedTags.txt";
+		HashMap<String, Tag> tempMap = new HashMap<>();
+		BufferedReader dataReader = getReader(filePath);
+
+		try {
+			String dataLine = "";
+
+			while ((dataLine = dataReader.readLine()) != null) {
+				String[] data = dataLine.split(",");
+				// System.out.println(dataLine);
+				int tagID = Integer.parseInt(data[0]);
+				String tagName = data[1];
+				Tag tempTag = new Tag(tagID, tagName);
+				// System.out.println(tempTag.getTagID());
+				tempMap.put(tagName, tempTag);
+			}
+
+		} catch (IOException e) {
+			System.err.println("ERROR@LastFMDataController_loadLearnedTag");
+			System.err.println(e.toString());
+		}
+
+		return tempMap;
+
+	}
+
+	private static HashMap<String, Artist> loadLearnedArtist() {
+		String filePath = "./learnedArtists.txt";
+		HashMap<String, Artist> tempMap = new HashMap<>();
+		BufferedReader dataReader = getReader(filePath);
+
+		try {
+			String dataLine = "";
+
+			while ((dataLine = dataReader.readLine()) != null) {
+				String[] data = dataLine.split(",");
+				Artist tempArtist = new Artist(data[0]);
+				//System.out.println(dataLine);
+				if (data.length > 1) {
+					for (int index = 1; index < data.length; index++) {
+						if (initailTags.containsKey(data[index])) {
+							Tag tag = initailTags.get(data[index]);
+							tempArtist.addArtistTag(tag);
+						}
+					}
+				}
+				tempMap.put(tempArtist.getArtistName(), tempArtist);
+			}
+
+		} catch (IOException e) {
+			System.err.println("ERROR@LastFMDataController_loadLearnedTag");
+			System.err.println(e.toString());
+		}
+
+		return tempMap;
+
+	}
+
+	private static BufferedReader getReader(String filePath) {
 		File tempFile = new File(filePath);
+		FileReader fileReader = null;
+		try {
+			fileReader = new FileReader(tempFile);
+		} catch (IOException e) {
+			System.err.println("ERROR@LastFMDataController_getReader");
+			System.err.println(e.toString());
+		}
+		return new BufferedReader(fileReader);
 	}
 
 }

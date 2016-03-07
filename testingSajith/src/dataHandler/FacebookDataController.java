@@ -17,18 +17,11 @@ import objectStructures.UserFacebook;
 
 public class FacebookDataController {
 	
-	public static User setUserTaste(User user){	
+	public static User setUserTaste(User user){
 		List<String> artistNameList = AccessFacebook.getArtistList(user);
-		artistNameList.addAll(AccessFacebook.getRecentArtistList(user));
-		return LastFMDataController.addUserTags(user, artistNameList);
-		
+		//artistNameList.addAll(AccessFacebook.getRecentArtistList(user));
+		User tempUser = LastFMDataController.addUserTags(user, artistNameList);
+		tempUser.setUserID(LastFMDataController.getNewUserID());
+		return tempUser;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -17,6 +17,8 @@ import java.util.List;
 
 import objectStructures.*;
 import java.util.*;
+
+import clusterHandler.*;
 /**
  * @author Sajith Dananjaya
  *
@@ -27,26 +29,37 @@ public class MainExecuter {
 	 * @param args
 	 */
 	public static void main(String[] args){
-
 		LastFMDataController.loadPreviousData();
 		LastFMDataController.initiateUsers();
- 		
+		String userFacebookID="";
+		String name = "Sajith Dananjaya";
+		String accessToken ="";
+		
+		User facebookUser = FacebookDataController
+				.setUserTaste(new UserFacebook(userFacebookID, name, accessToken));
+		facebookUser.setUserID(LastFMDataController.getNewUserID());
+		facebookUser.filterTaste();
+		
 		LastFMDataController.createDataSheet();
-		LastFMDataController.saveTagInforamtion();
-		LastFMDataController.saveArtistInforamtion();
-//		
-//		
-//		String userID="";
-//		String name = "Sajith Dananjaya";
-//		String accessToken ="";
-//		
-//		User facebookUser = FacebookDataController
-//				.setUserTaste(new UserFacebook(userID, name, accessToken));
-//		facebookUser.filterTaste();
+		ClusterProcess temp = new ClusterProcess();
+		temp.buildGraph("./trainDataSet.arff");
+		
+		String[] userIDList = temp.getRelatedUsers(facebookUser);
+		
+		for(String s: userIDList){
+			System.out.println(s);
+		}
+		
+		List<User> users= LastFMDataController.toUsers(temp.getRelatedUsers(facebookUser));
+		for(User user: users){
+			System.out.println(user.getUserName());
+		}
+		
+		
 //		LastFMDataController.saveTagInforamtion();
 //		
 //		for(Tag t: facebookUser.getMusicTaste().keySet()){
-//			System.err.println(t.getTagName()+" : "+facebookUser.getMusicTaste().get(t));
+//			System.out.println(t.getTagName()+" : "+facebookUser.getMusicTaste().get(t));
 //		}
 //		
 //		System.out.println(facebookUser.getTasteString());

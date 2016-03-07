@@ -16,6 +16,7 @@ import com.restfb.types.Post;
 import com.restfb.types.Page;
 import java.net.URLConnection;
 import com.restfb.FacebookClient;
+import com.restfb.Parameter;
 import com.restfb.DefaultFacebookClient;
 
 
@@ -36,9 +37,10 @@ public class AccessFacebook {
 				new DefaultFacebookClient(tempUser.getAccessToken(), Version.LATEST);
 		List<String> artistList = new ArrayList<>();
 		Connection<Post> respons =
-				fbClient.fetchConnection(tempUser.getUserName()+"/Music", Post.class);
+				fbClient.fetchConnection(tempUser.getUserName()+"/Music", Post.class,Parameter.with("limit", 50));
 		for(List<Post> page :respons){
 			for(Post post : page){
+				System.out.println(post.getName());
 				artistList.add(post.getName());
 			}
 		}
@@ -54,11 +56,13 @@ public class AccessFacebook {
 				fbClient.fetchConnection(tempUser.getUserName()+"/feed", Post.class);
 		for(List<Post> page : respons){
 			for(Post p : page){
-				if(p.getStory() != null && p.getStory().contains(" was listening to ")){
+				if(p.getStory() != null && p.getStory().contains(" listening to ")){
+					System.out.println(p.getStory());
 					musicActivities.add(p);
 				}
 			}
 		}
+		//return null;
 		return extractArtistFromPost(musicActivities, user);
 	}
 	
@@ -77,6 +81,8 @@ public class AccessFacebook {
 			catch(IOException e){
 				System.err.println("ERROR@extractArtistFromPost");
 				System.err.println(e.toString());
+			}catch(Exception e){
+				
 			}
 		}
 		return recentArtistList;

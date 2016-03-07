@@ -31,21 +31,25 @@ public class LastFMDataController {
 	private static int currentUserID = 1;
 	private static List<Tag> newTags = new ArrayList<>();
 	private static List<User> initialUsers = new ArrayList<>();
+	private static HashMap<Integer, User> initialUsersInfo = new HashMap<>();
 	private static HashMap<String, Tag> initailTags = new HashMap<>();
 	private static HashMap<String, Artist> learnedArtists = new HashMap<>();
 
 	public static void initiateUsers() {
-		URL url = AccessLastFM.getURL("user.getFriends&user=sajithdr&limit=130");
+		URL url = AccessLastFM.getURL("user.getFriends&user=sajithdr&limit=5");
 		Document userListXML = AccessLastFM.grabXML(url);
 		List<String> userList = AccessLastFM.extractPattern("<name>(.*?)</name>", userListXML, 4);
 		for (String userName : userList) {
-			// System.err.println("Learning of user "+userName);
+			System.out.println("Learning of user " + userName);
 			User tempUser = setUserTaste(userName);
+			tempUser.setUserName(userName);
 			tempUser.setUserID(currentUserID);
 			tempUser.filterTaste();
 			currentUserID++;
 			initialUsers.add(tempUser);
+			initialUsersInfo.put(tempUser.getUserID(), tempUser);
 		}
+		System.out.println("Done");
 	}
 
 	public static User setUserTaste(String userName) {
@@ -58,7 +62,7 @@ public class LastFMDataController {
 
 	public static User addUserTags(User user, List<String> artistNameList) {
 		for (String artistName : artistNameList) {
-			// System.err.println(artistName);
+			// System.out.println(artistName);
 			List<Tag> artistTags = getArtistInformation(artistName);
 			for (Tag tag : artistTags) {
 				user.setMusicTaste(tag);
@@ -70,7 +74,7 @@ public class LastFMDataController {
 	public static List<Tag> getArtistInformation(String artistName) {
 		if (!learnedArtists.containsKey(artistName)) {
 			// System.out.println("Learning about "+artistName);
-			URL url = AccessLastFM.getURL("artist.getTopTags&artist=" + artistName);
+			URL url = AccessLastFM.getURL("artist.getTopTags&artist=" + artistName + "&limit=5");
 			Document artistTagListXML = AccessLastFM.grabXML(url);
 			List<String> tagList = AccessLastFM.extractPattern("<name>(.*?)</name>", artistTagListXML, 4);
 			Artist tempArtist = new Artist(artistName);
@@ -149,7 +153,7 @@ public class LastFMDataController {
 				try {
 					Artist artist = learnedArtists.get(artistName);
 					String data = artist.getArtistName() + artist.getTagListString();
-					//System.err.println(data);
+					// System.err.println(data);
 					tempWriter.write(data);
 					tempWriter.newLine();
 				} catch (Exception e) {
@@ -168,6 +172,9 @@ public class LastFMDataController {
 		try {
 			tempWriter.write("@relation dataSet");
 			tempWriter.newLine();
+			tempWriter.newLine();
+
+			tempWriter.write("@attribute userID numeric");
 			tempWriter.newLine();
 
 			for (int index = 0; index < currentTagID - 1; index++) {
@@ -252,7 +259,7 @@ public class LastFMDataController {
 			while ((dataLine = dataReader.readLine()) != null) {
 				String[] data = dataLine.split(",");
 				Artist tempArtist = new Artist(data[0]);
-				//System.out.println(dataLine);
+				// System.out.println(dataLine);
 				if (data.length > 1) {
 					for (int index = 1; index < data.length; index++) {
 						if (initailTags.containsKey(data[index])) {
@@ -283,6 +290,14 @@ public class LastFMDataController {
 			System.err.println(e.toString());
 		}
 		return new BufferedReader(fileReader);
+	}
+
+	public static List<User> toUsers(String[] userIDList) {
+		List<User> users = new ArrayList<>();
+		for (String userID : userIDList) {
+			users.add(initialUsersInfo.get(userID));
+		}
+		return users;
 	}
 
 }

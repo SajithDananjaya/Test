@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-03-08T00:18:01</date>
+  <millis>1457376481436</millis>
+  <sequence>0</sequence>
+  <logger>clusterHandler.ClusterProcess</logger>
+  <level>WARNING</level>
+  <class>clusterHandler.ClusterProcess</class>
+  <method>buildGraph</method>
+  <thread>1</thread>
+  <message>May throw exception for poorly formated data files</message>
+</record>
+<record>
+  <date>2016-03-08T00:18:01</date>
+  <millis>1457376481446</millis>
+  <sequence>1</sequence>
+  <logger>clusterHandler.ClusterProcess</logger>
+  <level>WARNING</level>
+  <class>clusterHandler.ClusterProcess</class>
+  <method>getDataFile</method>
+  <thread>1</thread>
+  <message>May throw file not found exception for given path ./trainDataSet.arff</message>
+</record>
+<record>
+  <date>2016-03-08T00:18:01</date>
+  <millis>1457376481625</millis>
+  <sequence>2</sequence>
+  <logger>clusterHandler.ClusterProcess</logger>
+  <level>WARNING</level>
+  <class>clusterHandler.ClusterProcess</class>
+  <method>initiateClusters</method>
+  <thread>1</thread>
+  <message>May throw exception if the cluster count is a negative value</message>
+</record>
+<record>
+  <date>2016-03-08T00:18:01</date>
+  <millis>1457376481625</millis>
+  <sequence>3</sequence>
+  <logger>clusterHandler.ClusterProcess</logger>
+  <level>WARNING</level>
+  <class>clusterHandler.ClusterProcess</class>
+  <method>buildGraph</method>
+  <thread>1</thread>
+  <message>May throw exeption for instances type</message>
+</record>
+<record>
+  <date>2016-03-08T00:18:01</date>
+  <millis>1457376481901</millis>
+  <sequence>4</sequence>
+  <logger>clusterHandler.ClusterProcess</logger>
+  <level>INFO</level>
+  <class>clusterHandler.ClusterProcess</class>
+  <method>buildGraph</method>
+  <thread>1</thread>
+  <message>Clustering was completed</message>
+</record>
+</log>
